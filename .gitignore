@@ -1,0 +1,5 @@
+*.csv
+*.xlsx
+*.xls
+venv_waterStrider/
+*.exe
