@@ -3,3 +3,4 @@
 *.xls
 venv_waterStrider/
 *.exe
+**/__pycache__
