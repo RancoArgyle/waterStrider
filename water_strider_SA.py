@@ -196,11 +196,23 @@ def get_sa_allocation_trade():
     return df
 
 
+def main():
+    # choose from temporary/permanent
+    if sys.argv[1] == 'et':
+        if len(sys.argv)<3:
+            raise IndexError("No trade type detected, please choose temporary/permanent")
+        elif sys.argv[2].lower() == 'temporary':
+            df=get_sa_entitlement_trade('temporary')
+        elif sys.argv[2].lower() == 'permanent':
+            df=get_sa_entitlement_trade('permanent')
+        else:
+            raise ValueError("Parameter passed after et is not recognised")
+    elif sys.argv[1] == 'at':
+        df=get_sa_allocation_trade()
+
+    return df
+
+
 if __name__=='__main__':
-    # choose from Temporary/Permanent
-    # df=get_sa_entitlement_trade('temporary')
-
-    df=get_sa_allocation_trade()
-    print(df)
-
-    # print(get_sa_allocation_trade())
+    df=main()
+    print(df.head(10))
