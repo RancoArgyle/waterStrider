@@ -4,3 +4,4 @@
 venv_waterStrider/
 *.exe
 **/__pycache__
+*.ipynb

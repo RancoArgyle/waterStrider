@@ -58,7 +58,7 @@ days_back=31
 mode=['allocation','share','transfer'][endDate.minute//20]
 startDate=(endDate-timedelta(days=days_back)).strftime(r'%d-%b-%Y').upper()
 endDate=endDate.strftime(r'%d-%b-%Y').upper()
-params = {'mode': 'allocation',#mode,   # can choose from allocation/share/transfer
+params = {'mode': mode,#mode,   # can choose from allocation/share/transfer
       'row_start': 0,
       'row_end': 999,
       'startDate': startDate,
@@ -154,6 +154,7 @@ col=1)
 fig.update_layout(title = 'NSW Standard Commercial ($P > 0)',
 
 yaxis1_title = 'Price Paid ($/ML)',
+yaxis1_range = [0, df['high_price'].sort_values()[-2]*1.1],
 yaxis2_title = 'Volume(ML)',
 yaxis3_title = 'Trade Count',
 xaxis3_title = 'Date',
@@ -163,4 +164,5 @@ xaxis3_rangeslider_visible = False)
 
 fig.update_xaxes(tickangle=(360-90))
 
+# set y axis on first candlestick chart to allow 10% y margin
 plot(fig)

@@ -45,7 +45,7 @@ def load_river_menu(fpath=r'./nsw_water_mapping.json'):
 
 # =============================================================================
 # define url generator function
-def generate_url(mode):
+def generate_url(params):
     # load river menu
     if params['river'].lower() != 'all':
         menu=load_river_menu()
@@ -55,13 +55,13 @@ def generate_url(mode):
         
     # can choose from allocation/share/transfer
     
-    if mode=='allocation':
+    if params['mode']=='allocation':
         logger.info(f"Now downloading allocation trading row {params['row_start']} to row {params['row_end']} for period {params['startDate']} to {params['endDate']} for {params['river']}")
         url=f"https://waterregister.waternsw.com.au/AllocationResult?pageCommand=export&resultType=exel&fromRow={params['row_start']}&toRow={params['row_end']}&pageCommand=search&resultType=modern&startDate={params['startDate']}&endDate={params['endDate']}&src={which}&cat=&"
-    elif mode=='share':
+    elif params['mode']=='share':
         logger.info(f"Now downloading share trading row {params['row_start']} to row {params['row_end']} for period {params['startDate']} to {params['endDate']} for {params['river']}")
         url=f"https://waterregister.waternsw.com.au/WaterShareIntraWSResult?pageCommand=export&resultType=exel&fromRow={params['row_start']}&toRow={params['row_end']}&pageCommand=search&resultType=modern&period={params['startDate']}%20to%20{params['endDate']}&cat=&"
-    elif mode=='transfer':
+    elif params['mode']=='transfer':
         logger.info(f"Now downloading share transfer row {params['row_start']} to row {params['row_end']} for period {params['startDate']} to {params['endDate']} for {params['river']}")
         url=f"https://waterregister.waternsw.com.au/WaterShareTransferResult?pageCommand=export&resultType=exel&fromRow={params['row_start']}&toRow={params['row_end']}&pageCommand=search&resultType=modern&transferType=&period={params['startDate']}%20to%20{params['endDate']}&src={which}&cat=&"
 
@@ -106,7 +106,7 @@ def get_data(params):
     # raw_start=params['row_start']
     # loop thru all rows til XLRDError detected
     while keep_running:
-        url=generate_url(params['mode'])
+        url=generate_url(params)
         # call worker function
         data=get_byte_data(url,headers)
         try:
